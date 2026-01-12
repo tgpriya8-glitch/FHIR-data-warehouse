@@ -1,2 +1,8 @@
-# FHIR-data-warehouse
-FHIR, JSON. FSH
+**Container Advantage**
+Docker was used to package the FHIR server, database, and all dependent libraries into a single containerized runtime with fixed versions. This removed host-level variability across student laptops, regardless of operating system or hardware. Every participant ran an identical environment, ensuring consistent server behavior, predictable API responses, and reproducible setup. This eliminated environment-specific issues such as dependency conflicts and “works on my machine” errors, making development, testing, and demonstrations reliable.
+
+**Semantic Integrity**
+The project addressed semantic inconsistency in source CSV data by removing free-text and locally defined values. Instead of directly mapping these values, a controlled terminology approach was used through FHIR ConceptMap and the translation operation. This ensured that all incoming data was normalized into standard, well-defined clinical codes before being stored. As a result, clinical meaning was preserved, ambiguity was eliminated, and the data became interoperable across systems that rely on standardized terminologies rather than local conventions.
+
+**Transactional Atomicity**
+FHIR Transaction Bundles were used to upload related resources together rather than as separate requests. Patient and clinical data were linked and submitted in a single atomic operation. This guaranteed that either all resources were successfully created or none were, preventing partial data persistence. By enforcing all-or-nothing commits, the system avoided orphaned clinical records and maintained strict referential integrity between patient data and associated observations, improving overall data reliability and consistency.
